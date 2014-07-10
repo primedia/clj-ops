@@ -6,7 +6,7 @@
                  [compojure "1.1.8"]]
 
   :repositories
-  [["primedia"
+  [["releases"
     {:url "http://nexus.idg.primedia.com/nexus/content/repositories/primedia"
      :sign-releases false}]]
 
