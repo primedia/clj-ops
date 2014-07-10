@@ -4,9 +4,12 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [hiccup    "1.0.5"]
                  [compojure "1.1.8"]]
-  :plugins [[lein-ring "0.8.11"]]
-  :ring {:handler clj-ops.handler/app}
+
+  :repositories
+  [["primedia"
+    {:url "http://nexus.idg.primedia.com/nexus/content/repositories/primedia"
+     :sign-releases false}]]
+
   :profiles
-  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring-mock "0.1.5"]
+  {:dev {:dependencies [[ring-mock "0.1.5"]
                         [cheshire  "5.3.1"]]}})
