@@ -1,6 +1,7 @@
 (ns clj-ops.core
   (:require [compojure.core :refer [context GET]]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [hiccup.page :refer [html5]]))
 
 (defn json-response
   [content]
@@ -8,17 +9,27 @@
    :status 200
    :body (json/generate-string content)})
 
+(defn seq->hiccup-table
+  "transforms a sequence of sequences into a hiccup-style html table"
+  [tbl-vals]
+  (reduce
+   (fn [tbl vals]
+     (conj tbl
+           (reduce (fn [tr v] (conj tr [:td v])) [:tr] vals)))
+   [:table]
+   tbl-vals))
+
 (defn ops-routes
-  [build-info env]
+  [build-info env config]
   (context "/ops" []
     (GET "/heartbeat" [] "OK")
     (GET "/version" []
       (json-response build-info))
-    #_(GET "/env" []
-        (html5 (seq->hiccup-table (sort-by first @env))))
+    (GET "/env" []
+      (html5 (seq->hiccup-table (sort-by first @env))))
     (GET "/env.json" []
       (json-response @env))
-    #_(GET "/config" []
-        (html5 (seq->hiccup-table {})))
-    #_(GET "/config.json" []
-        (json-response {}))))
+    (GET "/config" []
+      (html5 (seq->hiccup-table @config)))
+    (GET "/config.json" []
+      (json-response @config))))

@@ -8,4 +8,5 @@
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring-mock "0.1.5"]
-                        [cheshire  "5.3.1"]]}})
+                        [cheshire  "5.3.1"]
+                        [hiccup    "1.0.5"]]}})
