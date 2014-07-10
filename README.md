@@ -1,19 +1,31 @@
 # clj-ops
 
-FIXME
+Implements RentPath's standard ops routes.
 
-## Prerequisites
+## Usage
 
-You will need [Leiningen][1] 1.7.0 or above installed.
+1. Add `[clj-ops "0.1.0-SNAPSHOT"]` to the dependencies in your
+`project.clj` file.
+2. Generate the ops routes as follows:
 
-[1]: https://github.com/technomancy/leiningen
+```clj
+(ns my-request-handler
+  (:require [clj-ops.core :refer [ops-routes]]
+            [clj-config :as c]
+            [clojure.java.io :as io]))
 
-## Running
+(def build-info (read-string (slurp (io/resource "build.edn"))))
 
-To start a web server for the application, run:
+(def get-confusion-config
+  []
+  ;; do confusion lookup
+  )
 
-    lein ring server
+(defroutes
+  (ops-routes build-info (delay (c/config)) get-confusion-config)
+  (GET "/" [] "Hello World!"))
+```
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 RentPath
