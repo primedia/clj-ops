@@ -4,7 +4,7 @@ Implements RentPath's standard ops routes.
 
 ## Usage
 
-1. Add `[clj-ops "0.1.0"]` to the dependencies in your
+1. Add `[clj-ops "0.1.1"]` to the dependencies in your
 `project.clj` file.
 2. Generate the ops routes as follows:
 
