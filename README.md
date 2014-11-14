@@ -4,7 +4,7 @@ Implements RentPath's standard ops routes.
 
 ## Usage
 
-1. Add `[clj-ops "0.1.1"]` to the dependencies in your
+1. Add `[clj-ops "1.0.0"]` to the dependencies in your
 `project.clj` file.
 2. Generate the ops routes as follows:
 
@@ -14,7 +14,9 @@ Implements RentPath's standard ops routes.
             [clj-config :as c]
             [clojure.java.io :as io]))
 
-(def build-info (read-string (slurp (io/resource "build.edn"))))
+(defn build-info 
+  []
+  (read-string (slurp (io/resource "build.edn"))))
 
 (def get-confusion-config
   []
@@ -22,7 +24,9 @@ Implements RentPath's standard ops routes.
   )
 
 (defroutes
-  (ops-routes build-info (delay (c/config)) get-confusion-config)
+  (ops-routes {:build-info build-info
+               :env c/config
+               :config get-confusion-config})
   (GET "/" [] "Hello World!"))
 ```
 
