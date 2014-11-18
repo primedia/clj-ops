@@ -2,6 +2,10 @@
 
 Implements RentPath's standard ops routes.
 
+# Breaking changes (November 2014, 1.0.0)
+
+ As of 1.0.0, ops-routes takes 3 functions as input.
+
 ## Usage
 
 1. Add `[clj-ops "1.0.0"]` to the dependencies in your
@@ -24,10 +28,12 @@ Implements RentPath's standard ops routes.
   )
 
 (defroutes
+  (GET "/" [] "Hello World!")
+
+                           ; functions
   (ops-routes {:build-info build-info
-               :env c/config
-               :config get-confusion-config})
-  (GET "/" [] "Hello World!"))
+               :env        c/config
+               :config     get-confusion-config}))
 ```
 
 ## License
