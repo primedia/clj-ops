@@ -6,8 +6,8 @@
 
 (def +env+ {"ENV_FOO" "42" "ENV_BAR" "true"})
 (def +configuration+ {"some" "configuration"})
-(def app (ops-routes {:build-time "NOW"}
-                     (delay +env+)
+(def app (ops-routes (constantly {:build-time "NOW"})
+                     (constantly +env+)
                      (constantly +configuration+)))
 
 (deftest test-app
