@@ -1,10 +1,11 @@
-(defproject clj-ops "1.0.0"
+(defproject clj-ops "1.1.0"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [hiccup    "1.0.5"]
                  [compojure "1.1.8"]
-                 [cheshire  "5.3.1"]]
+                 [cheshire  "5.4.0"]
+                 [ring/ring-core "1.3.2"]]
   :repositories
   [["releases"
     {:url "http://nexus.idg.primedia.com/nexus/content/repositories/primedia"
