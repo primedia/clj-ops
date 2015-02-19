@@ -15,7 +15,7 @@
 
   ([build-info env config]
    (context "/ops" []
-            (GET "/heartbeat" [] "OK 1.1.0")
+            (GET "/heartbeat" [] "OK")
             (GET "/version" []
                  (json-response (build-info)))
             (GET "/env" []
