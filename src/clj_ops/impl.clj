@@ -30,6 +30,6 @@
   (reduce
    (fn [tbl vals]
      (conj tbl
-           (reduce (fn [tr v] (conj tr [:td v])) [:tr] vals)))
+           (reduce (fn [tr v] (conj tr [:td (pr-str v)])) [:tr] vals)))
    [:table]
    tbl-vals))
