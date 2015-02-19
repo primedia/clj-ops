@@ -1,6 +1,6 @@
-(ns clj-ops.core-test
+(ns clj-ops.compojure-test
   (:require [clojure.test :refer :all]
-            [clj-ops.core :refer :all]
+            [clj-ops.compojure :refer :all]
             [cheshire.core :as json]
             [ring.mock.request :as mock]))
 
