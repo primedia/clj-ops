@@ -11,15 +11,28 @@
   - config :: function returning the app specific configuration (ie. Confusion)"
   [build-info env config]
   `["/ops"
-    ["/heartbeat" {:get [::heartbeat (constantly (html-response "OK"))]}]
-    ["/version" {:get [::version (constantly (json-response ~(build-info)))]}]
-    ["/env" {:get [::env (constantly (->> ~(env)
-                                          (sort-by first)
-                                          (seq->hiccup-table)
-                                          (html-response)))]}]
-    ["/env.json" {:get [::env-json (constantly (json-response
-                                                ~(env)))]}]
-    ["/config" {:get [::config (constantly (-> ~(config)
-                                               (seq->hiccup-table)
-                                               (html-response)))]}]
-    ["/config.json" {:get [::config-json (constantly (json-response ~(config)))]}]])
+    ~(with-meta [{:name :filter-HEAD-response
+                  :leave (fn [{req :request :as ctx}]
+                           (cond-> ctx
+                             (= :head (:request-method req)) (assoc-in [:response :body] nil)))}]
+       {:interceptors true})
+
+    ["/heartbeat" {:any [::heartbeat (constantly (html-response "OK"))]}]
+    ["/version" {:any [::version (constantly (json-response ~(build-info)))]}]
+    ["/env" {:any [::env (constantly (->> ~(env)
+                                 (sort-by first)
+                                 (seq->hiccup-table)
+                                 (html-response)))]}]
+    ["/env.json" {:any [::env-json (constantly (json-response ~(env)))]}]
+    ["/config"   {:any [::config (constantly (-> ~(config) (seq->hiccup-table) (html-response)))]}]
+    ["/config.json" {:any [::config-json (constantly (json-response ~(config)))]}]])
+
+
+
+
+
+
+
+
+
+
