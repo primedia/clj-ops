@@ -6,10 +6,10 @@
                  [compojure "1.1.8"]
                  [cheshire  "5.4.0"]
                  [ring/ring-core "1.3.2"]]
-  :repositories
-  [["releases"
-    {:url "http://nexus.idg.primedia.com/nexus/content/repositories/primedia"
-     :sign-releases false}]]
+  :repositories [["releases" {:url "http://nexus.idg.primedia.com/nexus/content/repositories/primedia"
+                              :sign-releases false
+                              :username [:gpg :env/nexus_username]
+                              :password [:gpg :env/nexus_password]}]]
 
   :profiles
   {:dev {:dependencies [[ring-mock "0.1.5"]]}})
