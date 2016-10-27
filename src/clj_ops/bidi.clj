@@ -10,13 +10,13 @@
   - env :: map of environment variables
   - app-config :: map of app-specific configuration (ie. Confusion)"
   [build-info env app-config]
-  ["/ops"
-   {"/heartbeat" {:get (constantly (html-response "OK"))}
-    "/version" {:get (constantly (json-response build-info))}
-    "/env" {:get (constantly (->> env
-                                  (sort-by first)
-                                  (seq->hiccup-table)
-                                  (html-response)))}
-    "/env.json" {:get (constantly (json-response env))}
-    "/config" {:get (constantly (-> app-config (seq->hiccup-table) (html-response)))}
-    "/config.json" {:get (constantly (json-response app-config))}}])
+  {"ops"
+   {"/heartbeat" (constantly (html-response "OK"))
+    "/version" (constantly (json-response build-info))
+    "/env" (constantly (->> env
+                            (sort-by first)
+                            (seq->hiccup-table)
+                            (html-response)))
+    "/env.json" (constantly (json-response env))
+    "/config" (constantly (-> app-config (seq->hiccup-table) (html-response)))
+    "/config.json" (constantly (json-response app-config))}})
