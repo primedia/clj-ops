@@ -1,7 +1,10 @@
 (ns clj-ops.impl
   (:require [cheshire.core :as json]
+            [cheshire.generate :refer [add-encoder encode-str]]
             [ring.util.response :as r]
             [hiccup.page :refer [html5]]))
+
+(add-encoder clojure.lang.Var encode-str)
 
 (defn json-response
   [content]
