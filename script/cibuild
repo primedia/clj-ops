@@ -63,6 +63,9 @@ else
     lein change version leiningen.release/bump-version release
 fi
 
+# Ensure new version is in target/ for below check on $RELEASED_VERSION
+lein install
+
 lein vcs commit
 
 export RELEASED_VERSION=v$(cat target/classes/META-INF/maven/com.rentpath/rp-ops-clj/pom.properties | grep '^\bversion\b' | cut -d"=" -f2-)
