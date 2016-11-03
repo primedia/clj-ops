@@ -2,37 +2,28 @@
   (:require [clj-ops.impl :as ops :refer
              [json-response html-response seq->hiccup-table]]))
 
+(defn response
+  [name static-response]
+  {:name name
+   :enter (fn [context]
+            (assoc context :response static-response))})
+
 (defn ops-routes
   "Generate RentPath's standard ops routes.
 
   ARGS:
-  - build-info :: function returning the build information for this particular jar.
-  - env :: function returning a map of environment variables
-  - config :: function returning the app specific configuration (ie. Confusion)"
-  [build-info env config]
-  `["/ops"
-    ~(with-meta [{:name :filter-HEAD-response
-                  :leave (fn [{req :request :as ctx}]
-                           (cond-> ctx
-                             (= :head (:request-method req)) (assoc-in [:response :body] nil)))}]
-       {:interceptors true})
-
-    ["/heartbeat" {:any [::heartbeat (constantly (html-response "OK"))]}]
-    ["/version" {:any [::version (constantly (json-response ~(build-info)))]}]
-    ["/env" {:any [::env (constantly (->> ~(env)
-                                 (sort-by first)
-                                 (seq->hiccup-table)
-                                 (html-response)))]}]
-    ["/env.json" {:any [::env-json (constantly (json-response ~(env)))]}]
-    ["/config"   {:any [::config (constantly (-> ~(config) (seq->hiccup-table) (html-response)))]}]
-    ["/config.json" {:any [::config-json (constantly (json-response ~(config)))]}]])
-
-
-
-
-
-
-
-
-
-
+  - build-info :: build information for this particular jar
+  - env        :: map of environment variables
+  - config     :: app-specific configuration"
+  [build-info env app-config]
+  #{["/ops/heartbeat" :any (response ::heartbeat (html-response "OK"))]
+    ["/ops/version" :any (response ::version (json-response build-info))]
+    ["/ops/env" :any (response ::env (->> env
+                                          (sort-by first)
+                                          (seq->hiccup-table)
+                                          (html-response)))]
+    ["/ops/env.json" :any (response ::env.json (json-response env))]
+    ["/ops/config" :any (response ::config (-> app-config
+                                               (seq->hiccup-table)
+                                               (html-response)))]
+    ["/ops/config.json" :any (response ::config.json (json-response app-config))]})
