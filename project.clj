@@ -1,4 +1,4 @@
-(defproject com.rentpath/rp-ops-clj "1.2.1"
+(defproject com.rentpath/rp-ops-clj "1.2.2-SNAPSHOT"
   :description "Ops utilities for Clojure apps"
   :url "https://github.com/rentpath/rp-ops-clj"
   :dependencies [[hiccup "1.0.5"]]
