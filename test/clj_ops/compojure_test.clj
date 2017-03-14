@@ -6,9 +6,9 @@
 
 (def +env+ {"ENV_FOO" "42" "ENV_BAR" "true"})
 (def +configuration+ {"some" "configuration"})
-(def app (ops-routes (constantly {:build-time "NOW"})
-                     (constantly +env+)
-                     (constantly +configuration+)))
+(def app (ops-routes {:build-time "NOW"}
+                     +env+
+                     +configuration+))
 
 (deftest test-app
   (testing "heartbeat"
@@ -28,7 +28,7 @@
   (testing "config"
     (let [response (app (mock/request :get "/ops/config.json"))]
       (is (= +configuration+ (json/parse-string (:body response))))))
-  
+
   (testing "not-found route"
     (let [response (app (mock/request :get "/invalid"))]
       (is (= response nil)))))
